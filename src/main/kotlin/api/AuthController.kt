@@ -11,28 +11,43 @@ class AuthController(
 
     @PostMapping("/register")
     fun register(
-        @RequestParam("login") login: String,
-        @RequestParam("password") password: String
-    ): LoginResponse {
-        val user = userService.create(login = login, password = password)
-        return LoginResponse(true, Role.USER)
+        @RequestBody authRequest: AuthRequest
+    ): AuthResponse {
+        if (authRequest.isIncorrect() || userService.find(login = authRequest.login!!).isPresent) {
+            return AuthResponse(false)
+        }
+
+        val user = userService.create(login = authRequest.login!!, password = authRequest.password!!)
+        return AuthResponse(true, Role.USER)
     }
 
 
     @PostMapping("/login")
     fun login(
-        @RequestParam("login") login: String,
-        @RequestParam("password") password: String
-    ): LoginResponse {
-        val user = userService.find(login = login)
-        val success = user.isPresent && user.get().password == password
+        @RequestBody authRequest: AuthRequest
+    ): AuthResponse {
 
-        return LoginResponse(success)
+        if (authRequest.isIncorrect()) {
+            return AuthResponse(false)
+        }
+
+        val user = userService.find(login = authRequest.login!!)
+
+        return if (user.isPresent && user.get().password == authRequest.password) {
+            AuthResponse(true, user.get().role)
+        } else {
+            AuthResponse(false)
+        }
+    }
+
+
+    class AuthRequest(var login: String? = null, var password: String? = null) {
+        fun isIncorrect() = login.isNullOrBlank() || password.isNullOrEmpty()
     }
 
     /**
      * Объект отражает результат запроса логина
      */
-    class LoginResponse(val success: Boolean, val role: Role? = null)
+    class AuthResponse(val success: Boolean, val role: Role? = null)
 
 }
