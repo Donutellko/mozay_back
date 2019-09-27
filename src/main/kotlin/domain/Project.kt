@@ -14,4 +14,6 @@ class Project(
     @GeneratedValue
     var id: Int? = null
 
+    @ManyToMany
+    var tags: Set<Tag> = setOf()
 }

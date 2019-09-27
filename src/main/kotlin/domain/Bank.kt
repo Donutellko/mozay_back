@@ -1,4 +1,4 @@
-package mozay.backend.mozay.backend.mozay.backend.domain
+package mozay.backend.domain
 
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue

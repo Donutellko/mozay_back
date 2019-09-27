@@ -1,35 +1,43 @@
 package mozay.backend.domain
 
-import mozay.backend.mozay.backend.domain.Requisite
 import javax.persistence.*
 
 @Entity
 class User(
 
-    var name: String? = null
-
-) {
-
     @Id
-    @GeneratedValue
-    var id: Int? = null
+    var login: String? = null,
+
+    var name: String? = null,
+
+    /**
+     * Пароль в открытом виде, ага
+     */
+    var password: String? = null,
+
+    /**
+     * Роль пользователя
+     */
+    @Enumerated(EnumType.STRING)
+    var role: Role = Role.USER
+) {
 
     /**
      * Список проектов, добавленных в избранное
      */
     @ManyToMany
-    var favorite: List<Project> = listOf()
+    var favorite: Set<Project> = setOf()
 
     /**
      * Список проектов, на которые перечисляются бонусы
      * */
     @ManyToMany
-    var passive: List<Project> = listOf()
+    var passive: Set<Project> = setOf()
 
     /**
      * Платёжные данные
      */
     @OneToMany
-    var requisites: List<Requisite> = listOf()
+    var requisites: Set<Requisite> = setOf()
 
 }

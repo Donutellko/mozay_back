@@ -15,7 +15,7 @@ class Transaction(
     /**
      * В пользу какого проекта
      */
-    @ManyToMany
+    @ManyToOne
     var project: Project? = null,
 
     /**

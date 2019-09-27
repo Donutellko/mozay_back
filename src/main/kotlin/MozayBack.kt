@@ -7,7 +7,7 @@ import org.springframework.boot.runApplication
 import org.springframework.context.ConfigurableApplicationContext
 
 @SpringBootApplication
-@EntityScan("domain")
+@EntityScan("mozay.backend.domain")
 class MozayBack
 
 private lateinit var context: ConfigurableApplicationContext
