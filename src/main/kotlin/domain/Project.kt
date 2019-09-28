@@ -36,7 +36,23 @@ class Project(
      * Фонд и его реквизиты
      */
     @ManyToOne
-    var foundation: Foundation? = null
+    var foundation: Foundation? = null,
+
+    /**
+     * Статус проекта: на модерации, ...
+     */
+    @Enumerated(EnumType.STRING)
+    var status: ProjectStatus? = ProjectStatus.DRAFT,
+
+    /**
+     * Цель по сбору средств
+     */
+    var goal: Int? = null,
+
+    /**
+     * Динамическая цель
+     */
+    var isDynamicGoal: Boolean = false
 
 ) {
 
@@ -49,5 +65,9 @@ class Project(
 
     @OneToMany(mappedBy = "project")
     var checkpoints: MutableSet<Checkpoint> = mutableSetOf()
+
+    enum class ProjectStatus {
+        DRAFT, ONLINE, ARCHIVE
+    }
 
 }

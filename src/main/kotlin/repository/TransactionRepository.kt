@@ -31,4 +31,11 @@ interface TransactionRepository: JpaRepository<Transaction, Int> {
         foundation: Int? = null
     ): Set<Array<Object>>
 
+    @Query("""
+        select sum(t.sum)
+        from Transaction t 
+        where t.project = :p 
+    """)
+    fun projectSum(p: Project): Int
+
 }

@@ -48,6 +48,6 @@ class AuthController(
     /**
      * Объект отражает результат запроса логина
      */
-    class AuthResponse(val success: Boolean, val role: Role? = null, val name: String? = null)
+    class AuthResponse(val success: Boolean, val role: Role = Role.ANON, val name: String? = null)
 
 }

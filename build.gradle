@@ -21,7 +21,7 @@ plugins {
 //}
 
 group 'polyteam'
-version '4.0'
+version '5.0'
 
 apply plugin: 'war'
 apply plugin: 'maven'

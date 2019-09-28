@@ -1,5 +1,6 @@
 package mozay.backend.api
 
+import mozay.backend.domain.Project
 import mozay.backend.repository.*
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
@@ -23,7 +24,22 @@ class StatisticsController(
             endDate = request.endDate,
             foundation = request.foundation
         )
-        return kek.map { k -> mapOf("project" to k[0], "sum" to k[1], "count" to k[2]) }
+        return kek.map { k -> mapOf(
+            "project" to k[0],
+            "sum" to k[1],
+            "count" to k[2]
+        ) }
+    }
+
+    /**
+     * Возвращает сумму переводов для этого проекта
+     */
+    @GetMapping("project/{id}")
+    fun projectStats(
+        @PathVariable("id") id: Int
+    ) {
+        val project = projectRepository.findById(id)
+        transactionRepository.projectSum(project.get())
     }
 
     class StatisticsFilter(

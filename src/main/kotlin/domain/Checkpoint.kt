@@ -13,10 +13,15 @@ class Checkpoint(
 
     var sum: Int? = null,
 
-    var content: String? = null,
+    var title: String? = null,
 
     @JsonSerialize(using = LocalDateSerializer::class)
-    var date: LocalDate = LocalDate.now()
+    var date: LocalDate = LocalDate.now(),
+
+    /**
+     * Достигнут ли этот чекпоинт
+     */
+    var isChallenge: Boolean = true
 
 ) {
 
