@@ -1,28 +1,44 @@
 package mozay.backend.api
 
-import mozay.backend.domain.Project
-import mozay.backend.service.ProjectService
+import mozay.backend.domain.*
+import mozay.backend.service.*
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/project")
 class ProjectController(
-    private val projectService: ProjectService
+    private val projectService: ProjectService,
+    private val tagService: TagService
 ) {
 
-    @PostMapping("/")
-    fun create(project: Project): Project {
+    @PostMapping("/project")
+    fun addProject(@RequestBody project: Project): Project {
         return projectService.save(project)
     }
 
-    @PutMapping("/")
-    fun edit(project: Project): Project {
+    @PutMapping("/project")
+    fun editProject(
+        @RequestParam("id") id: Int,
+        @RequestBody project: Project
+    ): Project {
+        project.id = id
         return projectService.save(project)
     }
 
-    @GetMapping("/")
-    fun list(limit: Int? = null): List<Project> {
+    @GetMapping("/projects")
+    fun listProjects(
+        @RequestParam("limit") limit: Int? = null
+    ): List<Project> {
         return projectService.getProjects(limit)
+    }
+
+    @GetMapping("/project")
+    fun getProject(id: Int): Project? {
+        return projectService.findById(id).orElse(null)
+    }
+
+    @GetMapping("/tags")
+    fun listTags(): Map<String?, List<Tag>> {
+        return tagService.getAll().groupBy { t -> t.category }
     }
 
 }

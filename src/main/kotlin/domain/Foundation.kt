@@ -1,17 +1,23 @@
 package mozay.backend.domain
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
+import javax.persistence.*
 
+/**
+ * Объект фонда создаётся и изменяется только супер-администратором.
+ */
 @Entity
 class Foundation(
     var title: String? = null,
 
     /**
-     * HTML of foundation description
+     * HTML страницы описания фонда, редактируется в TinyEMC
      */
-    var content: String? = null
+    var content: String? = null,
+
+    /**
+     * URL логотипа фонда
+     */
+    var picture: String? = null
 
 ) {
 

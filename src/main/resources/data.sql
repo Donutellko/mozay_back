@@ -15,3 +15,12 @@ insert into tag (category, title) values ('Регион', 'Международ�
 insert into tag (category, title) values ('Тема', 'Катастрофы');
 insert into tag (category, title) values ('Тема', 'Приюты животных');
 insert into tag (category, title) values ('Тема', 'Сироты');
+
+
+insert into project (id, title, date, content) VALUES (1, 'Сгорела жопа', '2019-09-28', 'hello');
+insert into project (id, title, date, content) VALUES (2, 'Жопа снова горит', '2019-09-28', 'hello');
+
+insert into "USER" ("LOGIN", "NAME", "PASSWORD", "ROLE") values ('admin', 'Александр Григорьевич', 'admin', 'ADMIN');
+insert into "USER" ("LOGIN", "NAME", "PASSWORD", "ROLE") values ('minnauki', 'Михаил', 'minnauki', 'ADMIN');
+insert into "USER" ("LOGIN", "NAME", "PASSWORD", "ROLE") values ('user', 'Вася', 'user', 'USER');
+

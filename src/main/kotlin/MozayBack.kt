@@ -5,6 +5,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.boot.runApplication
 import org.springframework.context.ConfigurableApplicationContext
+import org.springframework.context.annotation.Bean
+import org.springframework.web.servlet.config.annotation.CorsRegistry
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
+
+import org.springframework.context.annotation.Configuration
+import org.springframework.web.servlet.config.annotation.*
 
 @SpringBootApplication
 @EntityScan("mozay.backend.domain")
@@ -19,4 +25,12 @@ fun main(args: Array<String>) {
     }
 }
 
+@Configuration
+@EnableWebMvc
+class CorsConfig : WebMvcConfigurerAdapter() {
 
+    override fun addCorsMappings(registry: CorsRegistry) {
+        registry.addMapping("/**")
+    }
+
+}

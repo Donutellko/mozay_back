@@ -18,7 +18,7 @@ class AuthController(
         }
 
         val user = userService.create(login = authRequest.login!!, password = authRequest.password!!)
-        return AuthResponse(true, Role.USER)
+        return AuthResponse(true, Role.USER, user.name)
     }
 
 
@@ -34,7 +34,7 @@ class AuthController(
         val user = userService.find(login = authRequest.login!!)
 
         return if (user.isPresent && user.get().password == authRequest.password) {
-            AuthResponse(true, user.get().role)
+            AuthResponse(true, user.get().role, user.get().name)
         } else {
             AuthResponse(false)
         }
@@ -48,6 +48,6 @@ class AuthController(
     /**
      * Объект отражает результат запроса логина
      */
-    class AuthResponse(val success: Boolean, val role: Role? = null)
+    class AuthResponse(val success: Boolean, val role: Role? = null, val name: String? = null)
 
 }

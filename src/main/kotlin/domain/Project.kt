@@ -7,10 +7,27 @@ import javax.persistence.*
 class Project(
     var title: String? = null,
 
+    /**
+     * HTML страницы, редактируемый в TinyMCE
+     */
     @Column(length = 4000)
     var content: String? = null,
 
-    var date: LocalDate = LocalDate.now()
+    /**
+     * Дата размещения
+     */
+    var date: LocalDate = LocalDate.now(),
+
+    /**
+     * Путь к изображению заставки
+     */
+    var image: String? = null,
+
+    /**
+     * Фонд и его реквизиты
+     */
+    @ManyToOne
+    var foundation: Foundation? = null
 
 ) {
 

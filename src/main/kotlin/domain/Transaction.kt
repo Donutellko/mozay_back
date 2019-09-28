@@ -1,6 +1,7 @@
 package mozay.backend.domain
 
 import java.math.BigDecimal
+import java.time.LocalDate
 import javax.persistence.*
 
 @Entity
@@ -24,7 +25,10 @@ class Transaction(
     var sum: BigDecimal? = null,
 
     @Enumerated(EnumType.STRING)
-    var type: TransactionType? = null
+    var type: TransactionType? = null,
+
+    var date: LocalDate = LocalDate.now()
+
 ) {
 
     @Id
