@@ -1,5 +1,7 @@
 package mozay.backend.domain
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer
 import java.time.LocalDate
 import javax.persistence.*
 
@@ -16,7 +18,14 @@ class Project(
     /**
      * Дата размещения
      */
-    var date: LocalDate = LocalDate.now(),
+    @JsonSerialize(using = LocalDateSerializer::class)
+    var beginDate: LocalDate = LocalDate.now(),
+
+    /**
+     * Дата окончания сбора
+     */
+    @JsonSerialize(using = LocalDateSerializer::class)
+    var endDate: LocalDate? = null,
 
     /**
      * Путь к изображению заставки

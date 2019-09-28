@@ -18,7 +18,7 @@ class ProjectController(
 
     @PutMapping("/project/{id}")
     fun editProject(
-        @RequestParam("id") id: Int,
+        @PathVariable("id") id: Int,
         @RequestBody project: Project
     ): Project {
         project.id = id
@@ -32,14 +32,14 @@ class ProjectController(
         return projectService.getProjects(limit)
     }
 
-    @GetMapping("/project/{id}/")
-    fun getProject(@RequestParam("id") id: Int): Project? {
+    @GetMapping("/project/{id}")
+    fun getProject(@PathVariable("id") id: Int): Project? {
         return projectService.findById(id).orElse(null)
     }
 
     @PostMapping("/project/{id}/checkpoint")
     fun addCheckpoint(
-        @RequestParam("id") id: Int,
+        @PathVariable("id") id: Int,
         @RequestBody checkpoint: Checkpoint
     ): Checkpoint {
         val project = projectService.findById(id)

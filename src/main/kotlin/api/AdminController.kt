@@ -26,7 +26,7 @@ class AdminController(
      */
     @PutMapping("/foundation/{id}")
     fun editFoundation(
-        @RequestParam("id") id: Int,
+        @PathVariable("id") id: Int,
         @RequestBody foundation: Foundation
     ): Foundation {
         foundation.id = id
