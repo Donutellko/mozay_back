@@ -24,8 +24,12 @@ class AdminController(
     /**
      * Править фонды
      */
-    @PutMapping("/foundation")
-    fun editFoundation(@RequestBody foundation: Foundation): Foundation {
+    @PutMapping("/foundation/{id}")
+    fun editFoundation(
+        @RequestParam("id") id: Int,
+        @RequestBody foundation: Foundation
+    ): Foundation {
+        foundation.id = id
         return foundationService.save(foundation)
     }
 

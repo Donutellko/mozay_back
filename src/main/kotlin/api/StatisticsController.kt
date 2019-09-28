@@ -19,8 +19,8 @@ class StatisticsController(
     fun projectsStatistics(@RequestBody request: StatisticsFilter): Any {
         val kek = transactionRepository.filter(
             login = request.login,
-            begin = request.begin,
-            end = request.end,
+            beginDate = request.beginDate,
+            endDate = request.endDate,
             foundation = request.foundation
         )
         return kek.map { k -> mapOf("project" to k[0], "sum" to k[1], "count" to k[2]) }
@@ -28,8 +28,8 @@ class StatisticsController(
 
     class StatisticsFilter(
         var login: String? = null,
-        var begin: LocalDate? = null,
-        var end: LocalDate? = null,
+        var beginDate: LocalDate? = null,
+        var endDate: LocalDate? = null,
         var foundation: Int? = null
     )
 

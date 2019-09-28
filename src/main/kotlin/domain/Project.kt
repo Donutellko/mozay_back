@@ -36,5 +36,9 @@ class Project(
     var id: Int? = null
 
     @ManyToMany
-    var tags: Set<Tag> = setOf()
+    var tags: MutableSet<Tag> = mutableSetOf()
+
+    @OneToMany(mappedBy = "project")
+    var checkpoints: MutableSet<Checkpoint> = mutableSetOf()
+
 }

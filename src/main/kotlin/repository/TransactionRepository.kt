@@ -19,15 +19,15 @@ interface TransactionRepository: JpaRepository<Transaction, Int> {
             join t.project p
             join p.foundation f 
         where (:login is null or :login = u.login)
-            and (:begin is null or :begin <= t.date)
-            and (:end is null or :end >= t.date)
+            and (:beginDate is null or :beginDate <= t.date)
+            and (:endDate is null or :endDate >= t.date)
             and (:foundation is null or :foundation = f.id)
         group by p
     """)
     fun filter(
         login: String? = null,
-        begin: LocalDate? = null,
-        end: LocalDate? = null,
+        beginDate: LocalDate? = null,
+        endDate: LocalDate? = null,
         foundation: Int? = null
     ): Set<Array<Object>>
 

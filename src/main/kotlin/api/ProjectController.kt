@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.*
 @RestController
 class ProjectController(
     private val projectService: ProjectService,
-    private val tagService: TagService
+    private val tagService: TagService,
+    private val checkpointService: CheckpointService
 ) {
 
     @PostMapping("/project")
@@ -15,7 +16,7 @@ class ProjectController(
         return projectService.save(project)
     }
 
-    @PutMapping("/project")
+    @PutMapping("/project/{id}")
     fun editProject(
         @RequestParam("id") id: Int,
         @RequestBody project: Project
@@ -31,9 +32,22 @@ class ProjectController(
         return projectService.getProjects(limit)
     }
 
-    @GetMapping("/project")
-    fun getProject(id: Int): Project? {
+    @GetMapping("/project/{id}/")
+    fun getProject(@RequestParam("id") id: Int): Project? {
         return projectService.findById(id).orElse(null)
+    }
+
+    @PostMapping("/project/{id}/checkpoint")
+    fun addCheckpoint(
+        @RequestParam("id") id: Int,
+        @RequestBody checkpoint: Checkpoint
+    ): Checkpoint {
+        val project = projectService.findById(id)
+
+        checkpoint.project = project.get()
+        project.get().checkpoints.add(checkpoint)
+
+        return checkpointService.save(checkpoint)
     }
 
     @GetMapping("/tags")
