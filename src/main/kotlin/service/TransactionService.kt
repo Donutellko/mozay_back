@@ -3,8 +3,10 @@ package mozay.backend.service
 import mozay.backend.domain.*
 import mozay.backend.domain.Transaction.TransactionType.*
 import mozay.backend.repository.TransactionRepository
+import org.springframework.stereotype.Service
 import java.math.BigDecimal
 
+@Service
 class TransactionService(
     private val transactionRepository: TransactionRepository
 ) {
@@ -21,6 +23,14 @@ class TransactionService(
                 type = if (isDirect) DONATE else PASSIVE
             )
         )
+    }
+
+    fun projectSum(project: Project): Int {
+        return transactionRepository.projectSum(project) ?: 0
+    }
+
+    fun participants(project: Project): Int {
+        return transactionRepository.participants(project) ?: 0
     }
 
 }

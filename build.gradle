@@ -21,7 +21,7 @@ plugins {
 //}
 
 group 'polyteam'
-version '5.0'
+version '6.0'
 
 apply plugin: 'war'
 apply plugin: 'maven'
@@ -55,6 +55,10 @@ dependencies {
 
 //    compile 'io.swagger:swagger-codegen:3.0.0-rc1'
 
+    compile 'com.fasterxml.jackson.module:jackson-module-kotlin'
+//    compile 'com.fasterxml.jackson.module:jackson-modules-java8:2.9.7'
+//    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.6"
+//    compile 'com.fasterxml.jackson.core:jackson-databind'
     compile 'javax.xml.bind:jaxb-api:2.3.1' // для разрешения javax/xml/bind/JAXBException
 }
 

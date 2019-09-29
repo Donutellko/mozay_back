@@ -6,8 +6,10 @@ import mozay.backend.service.UserService
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RestController
 import java.math.BigDecimal
 
+@RestController
 class TransactionController(
     private val transactionService: TransactionService,
     private val projectService: ProjectService,
@@ -25,7 +27,10 @@ class TransactionController(
         val user = userService.find(payment.login!!).get()
         val projectsCount = BigDecimal(user.passive.size)
 
-        val part = BigDecimal(payment.sum).multiply(cacheback).divide(projectsCount)
+        val part = if (user.passive.isEmpty())
+            BigDecimal.ZERO
+        else
+            BigDecimal(payment.sum).multiply(cacheback).divide(projectsCount)
 
         for (project in user.passive) {
             transactionService.pay(user = user, project = project, sum = part, isDirect = false)
@@ -35,7 +40,7 @@ class TransactionController(
     /**
      * Прямой перевод на проект
      */
-    @PostMapping("/project/{id}/donate")
+    @PostMapping("project/{id}/donate")
     fun donate(
         @PathVariable("id") id: Int,
         @RequestBody payment: Payment

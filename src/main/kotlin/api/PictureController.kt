@@ -12,7 +12,7 @@ class PictureController(private val pictureService: PictureService) {
      * Сохранить фото в ФС и вернуть путь к нему
      */
 
-    @PostMapping
+    @PostMapping("picture")
     fun upload(file: MultipartFile): String {
         return pictureService.save(file)
     }

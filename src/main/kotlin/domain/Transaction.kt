@@ -1,5 +1,7 @@
 package mozay.backend.domain
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer
 import java.math.BigDecimal
 import java.time.LocalDate
 import javax.persistence.*
@@ -27,6 +29,7 @@ class Transaction(
     @Enumerated(EnumType.STRING)
     var type: TransactionType? = null,
 
+    @JsonSerialize(using = LocalDateSerializer::class)
     var date: LocalDate = LocalDate.now()
 
 ) {

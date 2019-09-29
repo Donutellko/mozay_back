@@ -7,10 +7,18 @@ import java.util.*
 
 @Service
 class ProjectService(
-    private val projectRepository: ProjectRepository
+    private val projectRepository: ProjectRepository,
+    private val checkpointService: CheckpointService,
+    private val foundationService: FoundationService
 ) {
 
     fun save(project: Project): Project {
+        for (c in project.checkpoints)
+            checkpointService.save(c)
+
+        if (project.foundation != null)
+            foundationService.save(project.foundation!!)
+
         return projectRepository.save(project)
     }
 

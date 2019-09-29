@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.time.LocalDate
+import java.util.*
 
 @Repository
 interface TransactionRepository: JpaRepository<Transaction, Int> {
@@ -36,6 +37,15 @@ interface TransactionRepository: JpaRepository<Transaction, Int> {
         from Transaction t 
         where t.project = :p 
     """)
-    fun projectSum(p: Project): Int
+    fun projectSum(p: Project): Int?
+
+    @Query("""
+        select count(distinct t.user)
+        from Transaction t 
+        where t.project = :p
+    """)
+    fun participants(p: Project): Int?
+
+    fun findByProject(project: Project): Set<Transaction>
 
 }

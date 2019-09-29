@@ -1,5 +1,6 @@
 package mozay.backend.domain
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer
 import java.time.LocalDate
@@ -16,14 +17,22 @@ class Project(
     var content: String? = null,
 
     /**
+     * Описание в пару предложений
+     */
+    @Column(length = 4000)
+    var desc: String? = null,
+
+    /**
      * Дата размещения
      */
+//    @JsonSerialize(using = DateSerializationConfig.LocalDateSerializer::class)
     @JsonSerialize(using = LocalDateSerializer::class)
     var beginDate: LocalDate = LocalDate.now(),
 
     /**
      * Дата окончания сбора
      */
+//    @JsonSerialize(using = DateSerializationConfig.LocalDateSerializer::class)
     @JsonSerialize(using = LocalDateSerializer::class)
     var endDate: LocalDate? = null,
 
@@ -42,20 +51,14 @@ class Project(
      * Статус проекта: на модерации, ...
      */
     @Enumerated(EnumType.STRING)
-    var status: ProjectStatus? = ProjectStatus.DRAFT,
+    var status: ProjectStatus? = ProjectStatus.DRAFT
 
     /**
      * Цель по сбору средств
      */
-    var goal: Int? = null,
-
-    /**
-     * Динамическая цель
-     */
-    var isDynamicGoal: Boolean = false
+//    var goal: Int? = null
 
 ) {
-
     @Id
     @GeneratedValue
     var id: Int? = null
@@ -69,5 +72,14 @@ class Project(
     enum class ProjectStatus {
         DRAFT, ONLINE, ARCHIVE
     }
+
+    /**
+     * Вычисление следующей цели на основании количества собранного на данный момент
+     * и чекпоинтов
+     * Если недостигнутых нет, возвращает последний достигнутый
+     */
+    fun nextGoal(current: Int): Int? =
+        checkpoints.sortedBy { c -> c.sum!! }.find { c -> c.sum!! > current }?.sum
+            ?: checkpoints.maxBy { c -> c.sum!! }?.sum
 
 }
